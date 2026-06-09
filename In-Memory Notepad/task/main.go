@@ -4,17 +4,21 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 )
 
-const maxNotes = 5
-
 func main() {
-	var notes []string
 	scanner := bufio.NewScanner(os.Stdin)
 
+	fmt.Print("Enter the maximum number of notes: ")
+	scanner.Scan()
+	maxNotes, _ := strconv.Atoi(strings.TrimSpace(scanner.Text()))
+
+	var notes []string
+
 	for {
-		fmt.Print("Enter a command and data: ")
+		fmt.Print("\nEnter a command and data: ")
 		scanner.Scan()
 		input := strings.SplitN(scanner.Text(), " ", 2)
 		command := input[0]
@@ -25,15 +29,21 @@ func main() {
 
 		switch command {
 		case "create":
-			if len(notes) >= maxNotes {
+			if strings.TrimSpace(data) == "" {
+				fmt.Println("[Error] Missing note argument")
+			} else if len(notes) >= maxNotes {
 				fmt.Println("[Error] Notepad is full")
 			} else {
 				notes = append(notes, data)
 				fmt.Println("[OK] The note was successfully created")
 			}
 		case "list":
-			for i, note := range notes {
-				fmt.Printf("[Info] %d: %s\n", i+1, note)
+			if len(notes) == 0 {
+				fmt.Println("[Info] Notepad is empty")
+			} else {
+				for i, note := range notes {
+					fmt.Printf("[Info] %d: %s\n", i+1, note)
+				}
 			}
 		case "clear":
 			notes = notes[:0]
@@ -42,8 +52,7 @@ func main() {
 			fmt.Println("[Info] Bye!")
 			return
 		default:
-			fmt.Printf("%s %s\n", command, data)
+			fmt.Println("[Error] Unknown command")
 		}
-		fmt.Println()
 	}
 }
