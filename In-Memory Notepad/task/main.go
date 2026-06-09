@@ -71,12 +71,12 @@ func main() {
 				fmt.Printf("[Error] Position %d is out of the boundaries [1, %d]\n", pos, maxNotes)
 				break
 			}
-			if pos > len(notes) {
-				fmt.Println("[Error] There is nothing to update")
-				break
-			}
 			if strings.TrimSpace(noteStr) == "" {
 				fmt.Println("[Error] Missing note argument")
+				break
+			}
+			if pos > len(notes) {
+				fmt.Println("[Error] There is nothing to update")
 				break
 			}
 			notes[pos-1] = noteStr
