@@ -12,11 +12,13 @@ A simple in-memory notepad CLI built in Go — a [Hyperskill](https://hyperskill
 go run "In-Memory Notepad/task/main.go"
 ```
 
-## Usage (Stage 1)
+## Usage (Stage 2)
 
 The program runs in a loop, prompting `Enter a command and data:` on each iteration.
 
-| Input | Output |
+| Command | Description |
 |---|---|
-| `exit` | `[Info] Bye!` — program exits |
-| anything else | echoes the command and data back |
+| `create <text>` | Stores a new note (max 5) |
+| `list` | Prints all stored notes with 1-based position |
+| `clear` | Deletes all notes |
+| `exit` | Exits the program |
