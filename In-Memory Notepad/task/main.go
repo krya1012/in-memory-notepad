@@ -37,6 +37,7 @@ func main() {
 				notes = append(notes, data)
 				fmt.Println("[OK] The note was successfully created")
 			}
+
 		case "list":
 			if len(notes) == 0 {
 				fmt.Println("[Info] Notepad is empty")
@@ -45,12 +46,67 @@ func main() {
 					fmt.Printf("[Info] %d: %s\n", i+1, note)
 				}
 			}
+
 		case "clear":
 			notes = notes[:0]
 			fmt.Println("[OK] All notes were successfully deleted")
+
+		case "update":
+			if data == "" {
+				fmt.Println("[Error] Missing position argument")
+				break
+			}
+			parts := strings.SplitN(data, " ", 2)
+			posStr := parts[0]
+			noteStr := ""
+			if len(parts) > 1 {
+				noteStr = parts[1]
+			}
+			pos, err := strconv.Atoi(posStr)
+			if err != nil {
+				fmt.Printf("[Error] Invalid position: %s\n", posStr)
+				break
+			}
+			if pos < 1 || pos > maxNotes {
+				fmt.Printf("[Error] Position %d is out of the boundaries [1, %d]\n", pos, maxNotes)
+				break
+			}
+			if pos > len(notes) {
+				fmt.Println("[Error] There is nothing to update")
+				break
+			}
+			if strings.TrimSpace(noteStr) == "" {
+				fmt.Println("[Error] Missing note argument")
+				break
+			}
+			notes[pos-1] = noteStr
+			fmt.Printf("[OK] The note at position %d was successfully updated\n", pos)
+
+		case "delete":
+			if strings.TrimSpace(data) == "" {
+				fmt.Println("[Error] Missing position argument")
+				break
+			}
+			pos, err := strconv.Atoi(strings.TrimSpace(data))
+			if err != nil {
+				fmt.Printf("[Error] Invalid position: %s\n", strings.TrimSpace(data))
+				break
+			}
+			if pos < 1 || pos > maxNotes {
+				fmt.Printf("[Error] Position %d is out of the boundaries [1, %d]\n", pos, maxNotes)
+				break
+			}
+			if pos > len(notes) {
+				fmt.Println("[Error] There is nothing to delete")
+				break
+			}
+			notes = append(notes[:pos-1], notes[pos:]...)
+			fmt.Printf("[OK] The note at position %d was successfully deleted\n", pos)
+
 		case "exit":
 			fmt.Println("[Info] Bye!")
 			return
+
 		default:
 			fmt.Println("[Error] Unknown command")
 		}

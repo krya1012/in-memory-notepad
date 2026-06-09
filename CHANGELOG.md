@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [4.0.0] - 2026-06-09
+
+### Added
+
+- `update <pos> <text>` command: replaces the note at the given 1-based position.
+- `delete <pos>` command: removes the note at the given position and re-indexes remaining notes.
+- Full position validation for both commands: missing arg, non-integer, out-of-bounds, empty slot.
+
 ## [3.0.0] - 2026-06-09
 
 ### Added
