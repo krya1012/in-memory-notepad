@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [4.0.1] - 2026-06-09
+
+### Fixed
+
+- `update` now checks for a missing note argument before checking whether the target slot is occupied, matching the correct validation order.
+
 ## [4.0.0] - 2026-06-09
 
 ### Added
